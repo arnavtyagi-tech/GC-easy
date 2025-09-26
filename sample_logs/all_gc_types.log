@@ -1,0 +1,31 @@
+# -------- Serial GC --------
+0.234: [GC (Allocation Failure)  8192K->1024K(9728K), 0.0023456 secs]
+0.567: [Full GC (System.gc())  1024K->512K(9728K), 0.0102345 secs]
+0.789: [GC (Allocation Failure)  512K->256K(9728K), 0.0012345 secs]
+
+# -------- Parallel GC --------
+1.234: [GC (Allocation Failure) [PSYoungGen: 4096K->512K(6144K)] 8192K->4608K(9728K), 0.0045678 secs]
+1.567: [Full GC (Ergonomics) [PSYoungGen: 512K->0K(6144K)] [ParOldGen: 4096K->2048K(8192K)] 4608K->2048K(14336K), 0.025 secs]
+
+# -------- CMS GC --------
+2.123: [GC (Allocation Failure) [ParNew: 2048K->256K(3072K)] 8192K->6400K(9728K), 0.0034567 secs]
+2.456: [GC (CMS Initial Mark) [1 CMS-initial-mark: 6144K(8192K)] 6400K(9728K), 0.0012345 secs]
+2.789: [GC (CMS Final Remark)  6400K(9728K), 0.002 secs]
+
+# -------- G1GC --------
+3.123: [GC pause (G1 Evacuation Pause) (young) 32M->16M(64M), 0.0102345 secs]
+3.456: [GC pause (G1 Humongous Allocation) (mixed) 40M->20M(64M), 0.015 secs]
+3.789: [GC pause (G1 Mixed) 45M->22M(64M), 0.012 secs]
+
+# -------- ZGC --------
+4.123: [Pause Mark Start 0.5ms]
+4.234: [Concurrent Mark 10.2ms]
+4.345: [Pause Relocate Start 0.7ms]
+4.456: [Pause Relocate End 0.6ms]
+
+# -------- Shenandoah GC --------
+5.123: [Pause Init Mark 1.2ms]
+5.234: [Concurrent Mark 15.0ms]
+5.345: [Pause Final Evac 2.5ms]
+5.456: [Concurrent Cleanup 1.0ms]	
+

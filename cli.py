@@ -1,8 +1,17 @@
 # cli.py
 import argparse
 from core.detector import detect_jvm_and_gc
+import pandas as pd
+
+# Import all parsers
 from parsers.java8_parser import Java8Parser
 from parsers.java11plus_parser import Java11PlusParser
+
+# Map JVM version to parser class
+PARSER_MAP = {
+    "8": Java8Parser,
+    "11+": Java11PlusParser,
+}
 
 def main():
     parser = argparse.ArgumentParser(description="GC Log Analyzer CLI")
@@ -21,20 +30,28 @@ def main():
     print(f"Detected GC types: {gc_types}")
 
     # Step 2: Select parser
-    if jvm_version == "8":
-        parser_obj = Java8Parser()
-    elif jvm_version in ["11+", "17", "21"]:
-        parser_obj = Java11PlusParser()
-    else:
-        print("Parser for this JVM version not implemented yet.")
+    parser_class = PARSER_MAP.get(jvm_version)
+    if not parser_class:
+        print(f"Parser for JVM version '{jvm_version}' not implemented yet.")
         return
 
-    # Step 3: Parse log
-    df = parser_obj.parse_file(log_path)
-    print("\nParsed GC events:")
-    print(df.head())
+    parser_obj = parser_class()
 
-    # Step 4: Optional CSV export
+    # Step 3: Parse full log
+    df = parser_obj.parse_file(log_path)
+    total_events = len(df)
+    print(f"\nTotal GC events parsed: {total_events}")
+
+    # Preview first 10 rows
+    print("\nParsed GC events (showing first 10 rows):")
+    print(df.head(10))
+
+    # Step 4: Summary of GC types
+    print("\nSummary of GC events by collector:")
+    summary = df['collector'].value_counts()
+    print(summary.to_string())
+
+    # Step 5: Optional CSV export
     if args.output:
         df.to_csv(args.output, index=False)
         print(f"\nParsed data saved to {args.output}")
