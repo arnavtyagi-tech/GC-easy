@@ -2,6 +2,7 @@
 import argparse
 from core.detector import detect_jvm_and_gc
 from parsers.java8_parser import Java8Parser
+from parsers.java11_parser import Java11Parser
 
 def main():
     parser = argparse.ArgumentParser(description="GC Log Analyzer CLI")
@@ -19,17 +20,23 @@ def main():
     print(f"Detected JVM version: {jvm_version}")
     print(f"Detected GC types: {gc_types}")
 
-    # Step 2: Select parser
+    # Step 2: Select parser based on JVM version
     if jvm_version == "8":
         parser_obj = Java8Parser()
+    elif jvm_version == "11+":
+        parser_obj = Java11Parser()
     else:
         print("Parser for this JVM version not implemented yet.")
         return
 
-    # Step 3: Parse log
+    # Step 3: Parse log file
     df = parser_obj.parse_file(log_path)
+    if df.empty:
+        print("No GC events found in the log.")
+        return
+
     print("\nParsed GC events:")
-    print(df.head())
+    print(df.head(10))  # Show first 10 rows
 
     # Step 4: Optional CSV export
     if args.output:
