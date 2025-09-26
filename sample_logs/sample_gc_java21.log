@@ -1,0 +1,6 @@
+[0.111s][info][gc] GC(0) Pause Young (G1 Evacuation Pause) 1M->0M(4M) 0.876ms
+[0.456s][info][gc] GC(1) Pause Young (G1 Evacuation Pause) 2M->1M(4M) 1.234ms
+[1.567s][info][gc] GC(2) Pause Full (G1 Humongous Allocation) 7M->3M(8M) 6.789ms
+[2.234s][info][gc] GC(3) Pause Young (Shenandoah) 3M->1M(6M) 1.567ms
+[2.789s][info][gc] GC(4) Pause Young (ZGC) 5M->2M(8M) 2.345ms
+[3.012s][info][gc] GC(5) Pause Full (ZGC) 10M->5M(12M) 8.123ms
